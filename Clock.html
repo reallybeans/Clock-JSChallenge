@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Clock</title>
+</head>
+
+<body>
+    <div class="main" >
+        <div class="clock">
+            <div class="clock-face">
+                <div class="hand hour-hand"></div>
+                <div class="hand min-hand"></div>
+                <div class="hand second-hand"></div>
+            </div>
+        </div>
+        <div class="fullYear">
+            <p id="f date"></p>
+            <p id="f month"></p>
+            <p id="f year"></p>
+        </div>
+    </div>
+ 
+    <style>
+        html {
+            background: #c601ed url(https://i.pinimg.com/originals/3e/47/41/3e474151bee70e682b19dac7ce5bb57e.jpg);
+            background-size: 100%;
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
+            font-size: 10px;
+            background-repeat: no-repeat;
+        }
+
+        body {
+            margin: 0;
+            font-size: 2rem;
+            display: flex;
+            flex: 1;
+            min-height: 100vh;
+            align-items: center;
+        }
+        .main{
+            width: 100%;
+            display: flex;
+        }
+        .clock {
+            width: 30rem;
+            height: 30rem;
+            margin-left: 10%;
+            border: 29px solid white;
+            border-radius: 50%;
+            position: relative;
+            padding: 3rem;
+            box-shadow: 0 0 0 5px rgba(0, 0, 0, 1),
+                inset 0 0 0 10px #efefef,
+                inset 0 0 100px black,
+                0 0 10px rgba(0, 0, 0, 0.2);
+
+        }
+
+        .clock-face {
+            position: relative; 
+            width: 100%;
+            height: 100%;
+            transform: translateY(-2px);
+            /* account for the height of the clock hands */
+        }
+
+        .hand {
+            width: 50%;
+            height: 6px;
+            background-color: rgb(244, 217, 96);
+            position: absolute;
+            top: 50%;
+            transform-origin: 100%;
+            transform: rotate(90deg);
+            transition: all 0.05;
+            transition-timing-function: cubic-bezier(0.39, 0.575, 0.565, 1);
+        }
+
+        .fullYear {
+            width: 90rem;
+            height: 30rem;
+            margin-left: 15%;
+            margin-top: 30px;
+            padding-bottom: 20px; 
+            display: block;
+            position: relative;
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, 1),
+                inset 0 0 0 1px #efefef,
+                inset 0 0 100px black,
+                0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        p {
+            margin-left: 1px;
+            width: 25%;
+            height: 28rem;
+            position: relative;
+            display: inline-block;
+            text-align: center;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-size: 100px;
+        }
+    </style>
+    <script>
+        const secondHand = document.querySelector('.second-hand');
+        const minHand = document.querySelector('.min-hand');
+        const hourHand = document.querySelector('.hour-hand');
+        const now = new Date();
+        function setDate() {
+
+
+            const seconds = now.getSeconds();
+            const secondDegrees = ((seconds / 60) * 360) + 90;
+            secondHand.style.transform = `rotate(${secondDegrees}deg)`;
+
+            const mins = now.getMinutes();
+            const minDegrees = ((mins / 60) * 360) + ((seconds / 60) * 6) + 90;
+            minHand.style.transform = `rotate(${minDegrees}deg)`;
+
+            const hours = now.getHours();
+            const hourDegrees = ((hours / 12) * 360) + ((mins / 60) * 30) + 90;
+            hourHand.style.transform = `rotate(${hourDegrees}deg)`;
+
+        }
+        var date = now.getDate();
+        var months = now.getMonth();
+        var year = now.getFullYear();
+        // document.getElementById("times").innerHTML = "Today is: " +date + "/" + months + "/" + year;
+        document.getElementById('f date').innerHTML = date;
+        document.getElementById('f month').innerHTML = months + 1;
+        document.getElementById('f year').innerHTML = year;
+        setInterval(setDate, 1000);
+        setDate();
+    </script>
+</body>
+
+</html>
